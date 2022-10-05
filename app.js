@@ -5,8 +5,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const { errors } = require('celebrate');
-
 const mongoose = require('mongoose');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { PORT = 3000 } = process.env;
 
@@ -22,17 +22,11 @@ mongoose.connect('mongodb://localhost:27017/moviesdb', {
   autoIndex: true,
 });
 
-// app.use((req, res, next) => {
-//   req.user = {
-//     _id: '6305e24749b35cc2a3d01d93',
-//   };
-
-//   next();
-// });
-
 app.use(bodyParser.json());
-app.use(router);
+app.use(requestLogger);
+app.use('/api', router);
 app.use(cookieParser());
+app.use(errorLogger);
 app.use(errors());
 app.use(errorsHandler);
 

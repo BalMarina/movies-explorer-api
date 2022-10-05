@@ -46,58 +46,6 @@ const delMovie = (req, res, next) => {
     });
 };
 
-// const likeCard = (req, res, next) => {
-//   const { cardId } = req.params;
-//   const ownerId = req.user._id;
-//   Movie.findByIdAndUpdate(
-//     cardId,
-//     { $addToSet: { likes: ownerId } },
-//     {
-//       new: true,
-//       runValidators: true,
-//     },
-//   )
-//     .then((cards) => {
-//       if (!cards) {
-//         throw new NotFoundError('Передан несуществующий _id карточки.');
-//       }
-//       return res.send(cards);
-//     })
-//     .catch((err) => {
-//       if (err.name === 'CastError') {
-//         next(new InvalidDataError('Переданы некорректные данные для постановки/снятии лайка.'));
-//       } else {
-//         next(err);
-//       }
-//     });
-// };
-
-// const dislikeCard = (req, res, next) => {
-//   const { cardId } = req.params;
-//   const ownerId = req.user._id;
-//   Movie.findByIdAndUpdate(
-//     cardId,
-//     { $pull: { likes: ownerId } },
-//     {
-//       new: true,
-//       runValidators: true,
-//     },
-//   )
-//     .then((cards) => {
-//       if (!cards) {
-//         throw new NotFoundError('Передан несуществующий _id карточки.');
-//       }
-//       return res.status(200).send(cards);
-//     })
-//     .catch((err) => {
-//       if (err.name === 'CastError') {
-//         next(new InvalidDataError('Переданы некорректные данные для постановки/снятии лайка.'));
-//       } else {
-//         next(err);
-//       }
-//     });
-// };
-
 module.exports = {
   getMovie,
   saveMovie,

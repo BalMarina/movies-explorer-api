@@ -35,13 +35,6 @@ const validityUser = celebrate({
   }),
 });
 
-// const validityInitialCard = celebrate({
-//   body: Joi.object().keys({
-//     name: Joi.string().required().min(2).max(30),
-//     link: chekLink,
-//   }),
-// });
-
 const validitySavedMovies = celebrate({
   body: Joi.object().keys({
     country: Joi.string().required(),
@@ -90,7 +83,6 @@ const validitySignin = celebrate({
 
 module.exports = {
   validityUser,
-  // validityInitialCard,
   validitySavedMovies,
   validityMovies,
   validityProfile,
