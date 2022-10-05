@@ -16,12 +16,6 @@ const checkEmail = Joi.string()
     return helpers.message('Проверьте, соответствует ли введенная почта параметрам email');
   });
 
-const chekUrl = Joi.string()
-  .custom((value, helpers) => {
-    if (validator.isURL(value)) return value;
-    return helpers.message('Проверьте, есть ли у ссылки на изображение все параметры url');
-  });
-
 const checkLink = Joi.string()
   .required()
   .custom((value, helpers) => {
@@ -43,7 +37,7 @@ const validitySavedMovies = celebrate({
     year: Joi.string().required(),
     description: Joi.string().required(),
     image: checkLink,
-    trailer: checkLink,
+    trailerLink: checkLink,
     thumbnail: checkLink,
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
@@ -53,14 +47,14 @@ const validitySavedMovies = celebrate({
 
 const validityMovies = celebrate({
   params: Joi.object().keys({
-    cardId: checkId,
+    moviedId: checkId,
   }),
 });
 
 const validityProfile = celebrate({
   body: Joi.object().keys({
+    email: checkEmail,
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
   }),
 });
 
@@ -69,8 +63,6 @@ const validitySignup = celebrate({
     email: checkEmail,
     password: Joi.string().required(),
     name: Joi.string().min(2).max(30),
-    about: Joi.string().min(2).max(30),
-    avatar: chekUrl,
   }),
 });
 
