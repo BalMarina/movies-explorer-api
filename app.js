@@ -17,7 +17,13 @@ const app = express();
 
 app.use(helmet());
 
-mongoose.connect('mongodb://localhost:27017/moviesdb', {
+let dbUrl = 'mongodb://localhost:27017/moviesdb';
+
+if (process.env.NODE_ENV === 'production') {
+  dbUrl = process.env.DB_URL;
+}
+
+mongoose.connect(dbUrl, {
   useNewUrlParser: true,
   autoIndex: true,
 });
