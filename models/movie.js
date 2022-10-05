@@ -30,7 +30,7 @@ const movieSchema = new mongoose.Schema({
       message: 'Проверьте, корректна ли ссылка на изображение',
     },
   },
-  trailer: {
+  trailerLink: {
     type: String,
     required: true,
     validate: {

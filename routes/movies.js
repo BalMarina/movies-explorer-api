@@ -12,6 +12,6 @@ moviesRouter.get('/movies', auth, getMovie);
 
 moviesRouter.post('/movies', auth, validitySavedMovies, saveMovie);
 
-moviesRouter.delete('/movies/_id', auth, validityMovies, delMovie);
+moviesRouter.delete('/movies/:moviedId', auth, validityMovies, delMovie);
 
 module.exports = moviesRouter;
