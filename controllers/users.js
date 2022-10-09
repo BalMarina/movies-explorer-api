@@ -10,7 +10,7 @@ const NotFoundError = require('../errors/not-found-error');
 const SignupEmailError = require('../errors/signup-email-error');
 
 const getUser = (req, res, next) => {
-  User.find({})
+  User.findById(req.user._id)
     .then((users) => res.send(users))
     .catch(next);
 };
@@ -36,24 +36,28 @@ const createUser = (req, res, next) => {
 };
 
 const updateUser = (req, res, next) => {
-  const { name, about } = req.body;
+  const { name, email } = req.body;
   const userId = req.user._id;
+
   User.findOneAndUpdate(
     { _id: userId },
-    { name, about },
+    { name, email },
     {
       new: true,
       runValidators: true,
     },
   )
     .then((user) => {
+      console.log('user', user);
       if (!user) {
         throw new NotFoundError('Пользователь по указанному _id не найден.');
       }
       return res.status(200).send(user);
     })
     .catch((err) => {
-      if (err.name === 'ValidationError') {
+      if (err.codeName === 'DuplicateKey' && Object.keys(err.keyPattern).includes('email')) {
+        next(new SignupEmailError('Переданы некорректные данные при обновлении профиля.'));
+      } else if (err.name === 'ValidationError') {
         next(new InvalidDataError('Переданы некорректные данные при обновлении профиля.'));
       } else {
         next(err);

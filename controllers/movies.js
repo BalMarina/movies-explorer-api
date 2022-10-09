@@ -5,7 +5,7 @@ const NotFoundError = require('../errors/not-found-error');
 const UserAccessError = require('../errors/user-access-error');
 
 const getMovie = (req, res, next) => {
-  Movie.find({})
+  Movie.find({ owner: req.user._id })
     .then((movies) => res.send(movies))
     .catch(next);
 };
@@ -16,6 +16,7 @@ const saveMovie = (req, res, next) => {
   Movie.create({ ...params, owner: ownerId })
     .then((card) => res.send({ data: card }))
     .catch((err) => {
+      console.log('err', err);
       if (err.name === 'ValidationError') {
         next(new InvalidDataError('Ошибка сохранения фильма'));
       } else {

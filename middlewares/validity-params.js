@@ -54,7 +54,7 @@ const validityMovies = celebrate({
 const validityProfile = celebrate({
   body: Joi.object().keys({
     email: checkEmail,
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().min(2).max(30).required(),
   }),
 });
 
@@ -62,7 +62,7 @@ const validitySignup = celebrate({
   body: Joi.object().keys({
     email: checkEmail,
     password: Joi.string().required(),
-    name: Joi.string().min(2).max(30),
+    name: Joi.string().min(2).max(30).required(),
   }),
 });
 
