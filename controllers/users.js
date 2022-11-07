@@ -22,7 +22,12 @@ const createUser = (req, res, next) => {
     .then((hash) => User.create({ ...params, password: hash }))
     .then((user) => {
       const { password: p, ...data } = JSON.parse(JSON.stringify(user));
-      return res.send({ data });
+      const token = jwt.sign(
+        { _id: data._id },
+        NODE_ENV === 'production' ? process.env.JWT_SECRET : JWT_SECRET,
+        { expiresIn: '7d' },
+      );
+      return res.send({ data: { ...data, token } });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
